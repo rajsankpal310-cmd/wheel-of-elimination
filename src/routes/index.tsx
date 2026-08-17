@@ -280,12 +280,15 @@ function Index() {
                               transform={`rotate(${mid}) translate(0 ${-labelR}) rotate(90)`}
                               textAnchor="end"
                               dominantBaseline="middle"
-                              fontSize={fontSize}
-                              fontWeight={isWinner ? 800 : 600}
+                              fontSize={fontSize.toFixed(1)}
+                              fontWeight={isWinner ? 800 : 700}
                               fill={isWinner ? "oklch(0.18 0.05 260)" : "oklch(0.99 0 0)"}
-                              style={{ fontFamily: "var(--font-body)" }}
+                              style={{ fontFamily: "var(--font-body)", paintOrder: "stroke" }}
+                              stroke="oklch(0.16 0.04 259)"
+                              strokeWidth={0.9}
+                              strokeOpacity={isWinner ? 0 : 0.55}
                             >
-                              {truncate(name, maxChars)}
+                              {truncate(label, maxChars)}
                             </text>
                           </g>
                         );
