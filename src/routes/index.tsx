@@ -226,8 +226,8 @@ function Index() {
           <div className="relative mx-auto mt-6 aspect-square w-full max-w-[560px]">
             {/* FIXED pointer — never rotates with the wheel */}
             <div
-              className="pointer-events-none absolute top-0 left-1/2 z-30 -translate-x-1/2"
-              style={{ transform: "translate(-50%, -46%)" }}
+              className="pointer-events-none absolute top-0 left-1/2 z-30"
+              style={{ transform: "translate(-50%, -80%)" }}
             >
               <div
                 className={
