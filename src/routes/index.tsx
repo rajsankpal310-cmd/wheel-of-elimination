@@ -81,6 +81,13 @@ function truncate(name: string, max: number) {
   return name.length > max ? `${name.slice(0, max - 1).trimEnd()}…` : name;
 }
 
+/** Display-only: First Name + Last Name (middle names dropped). */
+function shortName(full: string) {
+  const parts = full.trim().split(/\s+/);
+  if (parts.length <= 2) return full.trim();
+  return `${parts[0]} ${parts[parts.length - 1]}`;
+}
+
 type Phase = "idle" | "spinning" | "result" | "complete";
 
 function Confetti({ seed }: { seed: number }) {
@@ -251,9 +258,16 @@ function Index() {
                         const fill = isWinner
                           ? "oklch(0.88 0.16 90)"
                           : SEGMENT_COLORS[i % SEGMENT_COLORS.length];
-                        const labelR = R * 0.94;
-                        const fontSize = remainingCount > 20 ? 13 : remainingCount > 12 ? 16 : 20;
-                        const maxChars = remainingCount > 20 ? 22 : remainingCount > 12 ? 26 : 30;
+                        const labelR = R * 0.95;
+                        // Arc height available per segment at the label band, and radial run length.
+                        const arcRoom = (segAngle * Math.PI * (R * 0.7)) / 180;
+                        const label = shortName(name);
+                        const radialRoom = labelR - 52;
+                        const fontSize = Math.max(
+                          11,
+                          Math.min(26, arcRoom * 0.78, (radialRoom / Math.max(label.length, 6)) * 1.85),
+                        );
+                        const maxChars = Math.max(10, Math.floor(radialRoom / (fontSize * 0.54)));
                         return (
                           <g key={name}>
                             <path
@@ -264,14 +278,17 @@ function Index() {
                             />
                             <text
                               transform={`rotate(${mid}) translate(0 ${-labelR}) rotate(90)`}
-                              textAnchor="end"
+                              textAnchor="start"
                               dominantBaseline="middle"
-                              fontSize={fontSize}
-                              fontWeight={isWinner ? 800 : 600}
+                              fontSize={fontSize.toFixed(1)}
+                              fontWeight={isWinner ? 800 : 700}
                               fill={isWinner ? "oklch(0.18 0.05 260)" : "oklch(0.99 0 0)"}
-                              style={{ fontFamily: "var(--font-body)" }}
+                              style={{ fontFamily: "var(--font-body)", paintOrder: "stroke" }}
+                              stroke="oklch(0.16 0.04 259)"
+                              strokeWidth={0.9}
+                              strokeOpacity={isWinner ? 0 : 0.55}
                             >
-                              {truncate(name, maxChars)}
+                              {truncate(label, maxChars)}
                             </text>
                           </g>
                         );
