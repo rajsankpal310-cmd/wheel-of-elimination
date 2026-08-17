@@ -142,3 +142,121 @@
     color: var(--color-foreground);
   }
 }
+
+/* ===== CSI Spin the Wheel design system ===== */
+@theme inline {
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-gold: var(--gold);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+}
+
+:root {
+  --background: oklch(0.16 0.04 259);
+  --foreground: oklch(0.97 0.01 250);
+  --surface: oklch(0.21 0.045 262);
+  --surface-2: oklch(0.26 0.05 264);
+  --card: oklch(0.21 0.045 262);
+  --card-foreground: oklch(0.97 0.01 250);
+  --popover: oklch(0.21 0.045 262);
+  --popover-foreground: oklch(0.97 0.01 250);
+  --brand: oklch(0.78 0.16 196);
+  --brand-foreground: oklch(0.18 0.05 260);
+  --gold: oklch(0.84 0.16 85);
+  --primary: oklch(0.78 0.16 196);
+  --primary-foreground: oklch(0.18 0.05 260);
+  --secondary: oklch(0.26 0.05 264);
+  --secondary-foreground: oklch(0.97 0.01 250);
+  --muted: oklch(0.26 0.05 264);
+  --muted-foreground: oklch(0.75 0.03 255);
+  --accent: oklch(0.84 0.16 85);
+  --accent-foreground: oklch(0.18 0.05 260);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.78 0.16 196);
+  --gradient-brand: linear-gradient(135deg, oklch(0.78 0.16 196), oklch(0.84 0.16 85));
+  --gradient-panel: linear-gradient(160deg, oklch(0.24 0.05 263), oklch(0.18 0.04 260));
+  --shadow-glow: 0 0 60px -10px oklch(0.78 0.16 196 / 45%);
+  --shadow-panel: 0 24px 60px -30px oklch(0 0 0 / 80%);
+}
+
+body {
+  font-family: var(--font-body);
+  background-image:
+    radial-gradient(circle at 15% 10%, oklch(0.78 0.16 196 / 12%), transparent 45%),
+    radial-gradient(circle at 85% 85%, oklch(0.84 0.16 85 / 10%), transparent 45%),
+    linear-gradient(oklch(1 0 0 / 3.5%) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(1 0 0 / 3.5%) 1px, transparent 1px);
+  background-size: auto, auto, 44px 44px, 44px 44px;
+  background-attachment: fixed;
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+
+@utility panel {
+  background-image: var(--gradient-panel);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-panel);
+}
+
+@utility text-gradient-brand {
+  background-image: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility btn-spin {
+  background-image: var(--gradient-brand);
+  color: var(--brand-foreground);
+  box-shadow: var(--shadow-glow);
+  transition: transform 0.2s ease, filter 0.2s ease;
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+  }
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+}
+
+@keyframes confetti-fall {
+  0% { transform: translate3d(0, -10vh, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate3d(var(--drift, 0px), 105vh, 0) rotate(720deg); opacity: 0.9; }
+}
+
+@utility confetti-piece {
+  position: fixed;
+  top: 0;
+  width: 10px;
+  height: 16px;
+  border-radius: 2px;
+  animation: confetti-fall linear forwards;
+  pointer-events: none;
+  z-index: 60;
+}
+
+@keyframes pop-in {
+  0% { transform: scale(0.8); opacity: 0; }
+  60% { transform: scale(1.04); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@utility animate-pop-in {
+  animation: pop-in 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 oklch(0.84 0.16 85 / 45%); }
+  50% { box-shadow: 0 0 40px 8px oklch(0.84 0.16 85 / 30%); }
+}
+
+@utility animate-glow-pulse {
+  animation: glow-pulse 1.8s ease-in-out infinite;
+}
