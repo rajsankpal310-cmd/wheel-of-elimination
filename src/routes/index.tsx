@@ -227,7 +227,7 @@ function Index() {
             {/* FIXED pointer — never rotates with the wheel */}
             <div
               className="pointer-events-none absolute top-0 left-1/2 z-30 -translate-x-1/2"
-              style={{ transform: "translate(-50%, -14%)" }}
+              style={{ transform: "translate(-50%, -46%)" }}
             >
               <div
                 className={
@@ -238,7 +238,7 @@ function Index() {
                       : "wheel-pointer"
                 }
               >
-                <svg width="64" height="86" viewBox="0 0 64 86" aria-hidden>
+                <svg width="78" height="108" viewBox="0 0 64 86" aria-hidden>
                   <defs>
                     <linearGradient id="ptrGrad" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="0%" stopColor="oklch(0.95 0.13 92)" />
