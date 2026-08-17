@@ -278,7 +278,7 @@ function Index() {
                             />
                             <text
                               transform={`rotate(${mid}) translate(0 ${-labelR}) rotate(90)`}
-                              textAnchor="end"
+                              textAnchor="start"
                               dominantBaseline="middle"
                               fontSize={fontSize.toFixed(1)}
                               fontWeight={isWinner ? 800 : 700}
