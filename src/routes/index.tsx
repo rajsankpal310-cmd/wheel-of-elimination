@@ -127,14 +127,19 @@ function Index() {
   const [confettiSeed, setConfettiSeed] = useState(0);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => () => timerRef.current && clearTimeout(timerRef.current), []);
+  useEffect(
+    () => () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    },
+    [],
+  );
 
   const segAngle = remaining.length > 0 ? 360 / remaining.length : 360;
 
   const spin = useCallback(() => {
     if (phase !== "idle" || remaining.length === 0) return;
     const idx = Math.floor(Math.random() * remaining.length);
-    const chosen = remaining[idx];
+    const chosen = remaining[idx]!;
     const seg = 360 / remaining.length;
     const center = idx * seg + seg / 2;
     const turns = 6 + Math.floor(Math.random() * 3);
@@ -168,7 +173,7 @@ function Index() {
   }, [phase, remaining, winner]);
 
   const doReset = useCallback(() => {
-    timerRef.current && clearTimeout(timerRef.current);
+    if (timerRef.current) clearTimeout(timerRef.current);
     setRemaining([...ALL_PARTICIPANTS]);
     setHistory([]);
     setWinner(null);
