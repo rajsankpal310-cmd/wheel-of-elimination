@@ -224,13 +224,50 @@ function Index() {
           </div>
 
           <div className="relative mx-auto mt-6 aspect-square w-full max-w-[560px]">
-            {/* pointer */}
-            <div className="absolute top-0 left-1/2 z-20 -translate-x-1/2 -translate-y-1">
+            {/* FIXED pointer — never rotates with the wheel */}
+            <div
+              className="pointer-events-none absolute top-0 left-1/2 z-30 -translate-x-1/2"
+              style={{ transform: "translate(-50%, -14%)" }}
+            >
               <div
-                className="h-8 w-6 bg-gold"
-                style={{ clipPath: "polygon(50% 100%, 0 0, 100% 0)" }}
-              />
+                className={
+                  phase === "spinning"
+                    ? "wheel-pointer wheel-pointer-ticking"
+                    : phase === "result"
+                      ? "wheel-pointer wheel-pointer-land"
+                      : "wheel-pointer"
+                }
+              >
+                <svg width="64" height="86" viewBox="0 0 64 86" aria-hidden>
+                  <defs>
+                    <linearGradient id="ptrGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="oklch(0.95 0.13 92)" />
+                      <stop offset="60%" stopColor="oklch(0.84 0.17 78)" />
+                      <stop offset="100%" stopColor="oklch(0.70 0.18 52)" />
+                    </linearGradient>
+                  </defs>
+                  <rect
+                    x="16"
+                    y="2"
+                    width="32"
+                    height="16"
+                    rx="8"
+                    fill="oklch(0.22 0.04 260)"
+                    stroke="url(#ptrGrad)"
+                    strokeWidth="3"
+                  />
+                  <path
+                    d="M32 84 L8 22 Q32 10 56 22 Z"
+                    fill="url(#ptrGrad)"
+                    stroke="oklch(0.18 0.04 259)"
+                    strokeWidth="3"
+                    strokeLinejoin="round"
+                  />
+                  <path d="M32 74 L18 28 Q32 22 32 22 Z" fill="oklch(1 0 0)" opacity="0.28" />
+                </svg>
+              </div>
             </div>
+
 
             <div
               className="absolute inset-0 rounded-full p-[6px]"
